@@ -1,0 +1,41 @@
+.App {
+    background-color: #f2f2f2;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .App-header {
+    text-align: center;
+    color: #444;
+  }
+  
+  .App-header h1 {
+    font-size: 5rem;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid #008CBA; 
+    padding-bottom: 0.5rem;
+  }
+  
+  .App-buttons {
+    display: flex;
+    justify-content: center;
+    text-decoration: none !important;
+  }
+  
+  .button {
+    padding: 1rem 2rem;
+    margin: 0 1rem;
+    border: none;
+    border-radius: 0.5rem;
+    background-color: #008CBA;
+    color: white !important;
+    font-size: 1.2rem;
+    cursor: pointer;
+    text-decoration: none !important;
+  }
+  
+  .button:hover {
+    background-color: #005f6b;
+    text-decoration: none !important;
+  }
