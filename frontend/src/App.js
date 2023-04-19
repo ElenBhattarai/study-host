@@ -4,7 +4,7 @@ import Homepage from './Homepage'
 import Login from './Login';
 import Register from './Register';
 import CreateSession from './CreateSession';
-
+import JoinSession from './JoinSession';
 
 export default function App() {
   return (
@@ -15,6 +15,7 @@ export default function App() {
             <Route path = "/home" element = {<Homepage/>}/>
             <Route path = "/register" element = {<Register/>}/>
             <Route path = "/create" element = {<CreateSession/>}/>
+            <Route path = "/join" element = {<JoinSession/>}/>
         </Routes>   
     </BrowserRouter>
   );

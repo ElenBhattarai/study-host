@@ -8,8 +8,8 @@ export default function Homepage() {
           <header className="App-header">
             <h1>Study Host</h1>
             <div className="App-buttons">
-              <button className='button'><Link to="/create">Create a new session</Link></button>
-              <button className='button'>Join a study room</button>
+              <Link to="/create"><button className='button'>Create a new session</button></Link>
+              <Link to="/join"><button className='button'>Join a study room</button></Link>
             </div>
           </header>
         </div>

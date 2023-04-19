@@ -49,11 +49,16 @@ export default function CreateSession() {
     setEndTime(event.target.value);
   }
 
-  const handleSubmit = () => {
-    
-    console.log(studyGroupName, mode, department, courseNumber, date, startTime, endTime)
-  }
+  const handleSubmit = async() => {
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: studyGroupName, mode: mode, dept:department, cnum: courseNumber, date: date, stime: startTime, etime: endTime, user_id: 1 })
+      };
+      const response = await fetch('http://localhost:8000/createsession', requestOptions);
 
+
+  }
 
   return (
     <div className="App">
