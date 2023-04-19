@@ -3,13 +3,12 @@
     height: 100vh;
     display: flex;
     justify-content: center;
-    align-items: center;
-    justify-content: center;
   }
   
   .App-header {
     text-align: center;
     color: #444;
+    height: 100vh;
   }
   
   .App-header h1 {
@@ -19,9 +18,8 @@
     padding-bottom: 0.5rem;
   }
   
-  select {
+  select,input {
     padding: 0.5rem;
-    font-size: 1.2rem;
     margin: 1rem;
     border: none;
     border-radius: 0.5rem;
@@ -34,8 +32,6 @@
   }
   
   button {
-    padding: 1rem 2rem;
-    margin: 0 1rem;
     border: none;
     border-radius: 0.5rem;
     background-color: #008CBA;
