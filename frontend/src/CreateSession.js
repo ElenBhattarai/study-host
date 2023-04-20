@@ -1,6 +1,10 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
 import './CreateSession.css'
+import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 export default function CreateSession() {
   const [departments, setDepartments] = useState([]);
@@ -12,6 +16,7 @@ export default function CreateSession() {
   const [endTime, setEndTime] = useState('');
   const [studyGroupName, setStudyGroupName] = useState('');
   const [mode, setMode] = useState('');
+  const navigate = useNavigate();
 
   async function fetchCourses() {
     const response = await fetch('http://localhost:8000/getdepts');
@@ -49,19 +54,51 @@ export default function CreateSession() {
     setEndTime(event.target.value);
   }
 
+  
   const handleSubmit = async() => {
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name: studyGroupName, mode: mode, dept:department, cnum: courseNumber, date: date, stime: startTime, etime: endTime, user_id: 1 })
       };
-      const response = await fetch('http://localhost:8000/createsession', requestOptions);
-
-
-  }
+      try {
+        await fetch('http://localhost:8000/createsession', requestOptions);
+        toast.success('New study session sucessfully created!', {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          });
+        // await navigate('/join');
+      } catch (error) {
+        console.error(error);
+      }
+      setStudyGroupName('');
+      setMode('');
+      setDepartment('');
+      setCourseNumber('');
+      setDate('');
+      setStartTime('');
+      setEndTime('');
+  } 
 
   return (
     <div className="App">
+      <ToastContainer position="top-center"
+autoClose={5000}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+theme="light"
+/>
       <div className="App-header">
         <h1>Create a new session</h1>
         <label htmlFor="studyGroupName">Study Group Name:</label>

@@ -35,8 +35,12 @@ app.post('/createsession', async(req,res) => {
 
     const query =  `INSERT INTO Session(name,date,start_time,end_time,mode,course_id,user_id)   
                     VALUES ('${name}', '${date}', '${stime}', '${etime}', '${mode}', (SELECT course_id FROM Course WHERE department = '${dept}' AND course_num = ${cnum}), ${user_id})`
-    connection.query(query, function () {})
-
+    connection.query(query, function (err, results, fields){
+        if(err){
+            console.log(err)
+        }
+    })
+    res.json({})
 })
 
 app.get('/allsessions', async(req,res) => {
