@@ -63,7 +63,7 @@ export default function CreateSession() {
       try {
         await fetch('http://localhost:8000/createsession', requestOptions);
         toast.success('New study session sucessfully created!', {
-          position: "top-center",
+          position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
           closeOnClick: true,
@@ -87,17 +87,17 @@ export default function CreateSession() {
 
   return (
     <div className="App">
-      <ToastContainer position="top-center"
-autoClose={5000}
-hideProgressBar={false}
-newestOnTop={false}
-closeOnClick
-rtl={false}
-pauseOnFocusLoss
-draggable
-pauseOnHover
-theme="light"
-/>
+      <ToastContainer position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       <div className="App-header">
         <h1>Create a new session</h1>
         <label htmlFor="studyGroupName">Study Group Name:</label>
