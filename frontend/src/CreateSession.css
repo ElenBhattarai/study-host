@@ -3,35 +3,35 @@
     height: 100vh;
     display: flex;
     justify-content: center;
-  }
+}
   
-  .App-header {
+.App-header {
     text-align: center;
     color: #444;
     height: 100vh;
-  }
+}
   
-  .App-header h1 {
+.App-header h1 {
     font-size: 5rem;
     margin-bottom: 2rem;
     border-bottom: 2px solid #008CBA; 
     padding-bottom: 0.5rem;
-  }
+}
   
-  select,input {
+select,input {
     padding: 0.5rem;
     margin: 1rem;
     border: none;
     border-radius: 0.5rem;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  }
+}
   
-  select:focus {
+select:focus {
     outline: none;
     box-shadow: 0 0 0 2px #008CBA;
-  }
+}
   
-  button {
+button {
     border: none;
     border-radius: 0.5rem;
     background-color: #008CBA;
@@ -39,9 +39,9 @@
     font-size: 1.2rem;
     cursor: pointer;
     text-decoration: none !important;
-  }
+}
   
-  button:hover {
+button:hover {
     background-color: #005f6b;
     text-decoration: none !important;
-  }
+}
