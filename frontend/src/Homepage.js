@@ -4,6 +4,7 @@ import {Link} from "react-router-dom";
 
 export default function Homepage() {
     return (
+      <>
         <div className="App">
           <header className="App-header">
             <h1>Study Host</h1>
@@ -13,6 +14,7 @@ export default function Homepage() {
             </div>
           </header>
         </div>
+      </>
       );
 }
 
