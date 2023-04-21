@@ -54,7 +54,7 @@ function NavHeader() {
         <div className='profile'>
           {(sessionStorage.getItem('loggedIn')) && (
             <>
-            <div>{sessionStorage.getItem('firstname')}</div>
+            <div>{sessionStorage.getItem('firstname')} {sessionStorage.getItem('lastname')}</div>
             <button onClick={handleLogout}>Logout</button>
             </>
           )}

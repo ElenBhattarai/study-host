@@ -66,6 +66,31 @@ app.post("/register", async (req,res)=>{
     }
 })
 
+app.post("/login", async(req,res)=>{
+    const {email, password} = req.body;
+    try{
+        const query =  `SELECT * FROM User WHERE email = '${email}'`
+        connection.query(query, async function(err,results,fields){
+            if(err){
+                console.log(err)
+            } else {
+                if(!results[0]){
+                    res.status(400).send('Wrong password')
+                } else {
+                    const validPassword = await bcrypt.compare(password, results[0].password)
+                    if(!validPassword){
+                        res.status(400).send('Wrong password')
+                    } else {
+                        res.status(200).send(results[0])
+                    }
+                }
+            }
+        })
+    } catch(e) {
+        console.log(e)
+    }
+})
+
 
 
 app.listen(8000, ()=> {

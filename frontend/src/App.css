@@ -14,7 +14,7 @@
 .profile{
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: space-between;
     width: 10%;
     font-size: 150%;
     font-weight: bold;
