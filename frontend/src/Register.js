@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import "./Register.css";
+import { useNavigate } from "react-router-dom";
 
 function Register() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async(event) => {
     event.preventDefault();
@@ -22,6 +24,8 @@ function Register() {
       sessionStorage.setItem('user_id', data.user_id)
       sessionStorage.setItem('firstname', data.firstname)
       sessionStorage.setItem('lastname', data.lastname)
+      await navigate('/');
+      window.location.reload(true);
     } catch(err) {
       console.log(err)
     }

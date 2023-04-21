@@ -58,7 +58,6 @@ app.post("/register", async (req,res)=>{
             } else {
                 console.log({...req.body, user_id: results.insertId})
                 res.status(200).send({...req.body, user_id: results.insertId})
-
             }
         })
         
