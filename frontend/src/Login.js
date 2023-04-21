@@ -58,6 +58,10 @@ function Login() {
   
 
   return (
+    <>
+    <div className="header">
+        <h1>Study Host</h1>
+    </div>
     <div className="login-container">
       <ToastContainer position="top-right"
         autoClose={5000}
@@ -105,6 +109,7 @@ function Login() {
         </div>
       </form>
     </div>
+    </>
   );
 }
 

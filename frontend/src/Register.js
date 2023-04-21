@@ -32,6 +32,10 @@ function Register() {
   };
 
   return (
+    <>
+    <div className="header">
+        <h1>Study Host</h1>
+    </div>
     <div className="register-container">
       <form className="register-form" onSubmit={handleSubmit}>
         <h1 className="register-header">Register</h1>
@@ -96,6 +100,7 @@ function Register() {
         </div>
       </form>
     </div>
+    </>
   );
 }
 
