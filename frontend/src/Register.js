@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./Register.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 function Register() {
   const [firstName, setFirstName] = useState("");
@@ -89,7 +89,11 @@ function Register() {
         </div>
         <button className="register-button" type="submit">
           Register
-        </button>
+        </button><br/>
+        <div className="register-link-container">
+          <span>Already have an account? </span>
+          <Link to="/login" className="register-link">Login here</Link>
+        </div>
       </form>
     </div>
   );

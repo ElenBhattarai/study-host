@@ -54,3 +54,7 @@
   .login-button:hover {
     background-color: #005f6b;
   }
+
+  .register-link-container{
+    font-size: 20px;
+  }

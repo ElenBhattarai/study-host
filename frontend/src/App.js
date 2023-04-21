@@ -40,16 +40,6 @@ function NavHeader() {
     <nav className="nav">
       <div className='nav-header'>
         <Link className="nav-button" to="/">Home</Link>
-        {location.pathname !== '/' && (
-          <>
-            {location.pathname !== '/create' && (
-              <Link className="nav-button" to="/create">Create a new session</Link>
-            )}
-            {location.pathname !== '/join' && (
-              <Link className="nav-button" to="/join">Join a study room</Link>
-            )}
-          </>
-        )}
         </div>
         <div className='profile'>
           {(sessionStorage.getItem('loggedIn')) && (

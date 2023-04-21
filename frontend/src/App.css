@@ -6,16 +6,16 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 90%;
+    width: 83%;
     position: relative;
-    left: 5%;
+    left: 11%;
 }
 
 .profile{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 10%;
+    width: 17%;
     font-size: 150%;
     font-weight: bold;
     padding: 10px;
