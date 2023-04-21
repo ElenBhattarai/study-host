@@ -8,7 +8,8 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 app.use(cors());
 app.use(bodyParser.json());
-const bcrypt = require("bcrypt")
+const bcrypt = require("bcrypt");
+const e = require('express');
  
 app.get('/getdepts', async(req,res) => {
     connection.query('SELECT * FROM Course', function (err, results, fields) {   
@@ -46,7 +47,6 @@ app.get('/allsessions', async(req,res) => {
 
 app.post("/register", async (req,res)=>{
     const {email, password, firstname, lastname} = req.body
-
     try{
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password,salt)
@@ -55,9 +55,13 @@ app.post("/register", async (req,res)=>{
         connection.query(query, function(err,results,fields){
             if(err){
                 console.log(err)
+            } else {
+                console.log({...req.body, user_id: results.insertId})
+                res.status(200).send({...req.body, user_id: results.insertId})
+
             }
         })
-        res.status(200).send(req.body)
+        
     } catch(e) {
         console.log(e)    
     }

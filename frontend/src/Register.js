@@ -2,17 +2,29 @@ import React, { useState } from "react";
 import "./Register.css";
 
 function Register() {
-  const [username, setUsername] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async(event) => {
     event.preventDefault();
-    console.log("Username:", username);
-    console.log("Email:", email);
-    console.log("Password:", password);
-    console.log("Confirm Password:", confirmPassword);
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ firstname: firstName, lastname: lastName, email: email, password: password})
+    };
+    try {
+      const response = await fetch('http://localhost:8000/register', requestOptions);
+      const data = await response.json()
+      console.log(data)
+      sessionStorage.setItem('loggedIn', true)
+      sessionStorage.setItem('user_id', data.user_id)
+      sessionStorage.setItem('firstname', data.firstname)
+      sessionStorage.setItem('lastname', data.lastname)
+    } catch(err) {
+      console.log(err)
+    }
   };
 
   return (
@@ -20,15 +32,28 @@ function Register() {
       <form className="register-form" onSubmit={handleSubmit}>
         <h1 className="register-header">Register</h1>
         <div className="register-input-container">
-          <label className="register-label" htmlFor="username">
-            Username
+          <label className="register-label" htmlFor="first-name">
+            First Name
           </label>
           <input
             className="register-input"
             type="text"
-            id="username"
-            value={username}
-            onChange={(event) => setUsername(event.target.value)}
+            id="first-name"
+            value={firstName}
+            onChange={(event) => setFirstName(event.target.value)}
+            required
+          />
+        </div>
+        <div className="register-input-container">
+          <label className="register-label" htmlFor="last-name">
+            Last Name
+          </label>
+          <input
+            className="register-input"
+            type="text"
+            id="last-name"
+            value={lastName}
+            onChange={(event) => setLastName(event.target.value)}
             required
           />
         </div>
@@ -55,19 +80,6 @@ function Register() {
             id="password"
             value={password}
             onChange={(event) => setPassword(event.target.value)}
-            required
-          />
-        </div>
-        <div className="register-input-container">
-          <label className="register-label" htmlFor="confirm-password">
-            Confirm Password
-          </label>
-          <input
-            className="register-input"
-            type="password"
-            id="confirm-password"
-            value={confirmPassword}
-            onChange={(event) => setConfirmPassword(event.target.value)}
             required
           />
         </div>
