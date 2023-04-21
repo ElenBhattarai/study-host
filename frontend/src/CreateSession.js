@@ -58,7 +58,7 @@ export default function CreateSession() {
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: studyGroupName, mode: mode, dept:department, cnum: courseNumber, date: date, stime: startTime, etime: endTime, user_id: 1 })
+        body: JSON.stringify({ name: studyGroupName, mode: mode, dept:department, cnum: courseNumber, date: date, stime: startTime, etime: endTime, user_id: sessionStorage.getItem('user_id') })
       };
       try {
         await fetch('http://localhost:8000/createsession', requestOptions);
@@ -98,7 +98,7 @@ export default function CreateSession() {
         pauseOnHover
         theme="light"
       />
-      <div className="App-header">
+      <div className="App-headerss">
         <h1>Create a new session</h1>
         <label htmlFor="studyGroupName">Study Group Name:</label>
         <input id="studyGroupName" type="text" value={studyGroupName} onChange={event => setStudyGroupName(event.target.value)} />

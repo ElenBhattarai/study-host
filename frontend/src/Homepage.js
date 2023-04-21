@@ -6,7 +6,7 @@ export default function Homepage() {
     return (
       <>
         <div className="App">
-          <header className="App-header">
+          <header className="App-headers">
             <h1>Study Host</h1>
             <div className="App-buttons">
               <Link to="/create"><button className='button'>Create a new session</button></Link>
