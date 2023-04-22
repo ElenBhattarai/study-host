@@ -13,29 +13,31 @@ const e = require('express');
  
 app.get('/getdepts', async(req,res) => {
     connection.query('SELECT * FROM Course', function (err, results, fields) {   
-    console.log('Query results:', results);
     res.json({ courses: results });
     })
 });
 
 app.get('/getcourses', async(req,res) => {
-    connection.query(`SELECT course_num FROM Course WHERE department = '${req.query.dept}'`, function (err, results, fields) {   
-        console.log('Query results:', results);
+    connection.query(`SELECT course_num\
+                        FROM Course\
+                        WHERE department = '${req.query.dept}'`, function (err, results, fields) { 
         res.json({ courses: results });
     })
 })
 
 app.post('/createsession', async(req,res) => {
-    const {name, mode, dept, cnum, date, stime, etime, user_id} = req.body
+    const {name, mode, dept, cnum, date, stime, etime, user_id, description} = req.body
 
-    const query =  `INSERT INTO Session(name,date,start_time,end_time,mode,course_id,user_id)   
-                    VALUES ('${name}', '${date}', '${stime}', '${etime}', '${mode}', (SELECT course_id FROM Course WHERE department = '${dept}' AND course_num = ${cnum}), ${user_id})`
+    const query =  `INSERT INTO Session(name,date,start_time,end_time,mode,course_id,user_id, description)\ 
+                    VALUES ('${name}', '${date}', '${stime}', '${etime}', '${mode}',\ 
+                    (SELECT course_id FROM Course WHERE department = '${dept}' AND course_num = ${cnum}), ${user_id}, '${description}')`
     connection.query(query, function (err, results, fields){
         if(err){
             console.log(err)
         }
     })
-    const query2 = `INSERT INTO Joined(user_id, session_id) VALUES (${user_id}, (SELECT MAX(session_id) FROM Session))`
+    const query2 = `INSERT INTO Joined(user_id, session_id)\ 
+                    VALUES (${user_id}, (SELECT MAX(session_id) FROM Session))`
     connection.query(query2, function(err,results,fields){
         if(err){
             console.log(err)
@@ -52,7 +54,9 @@ app.get('/allsessions', async(req,res) => {
 
 app.get("/joinedsession", async(req,res) => {
     const {user_id} = req.query;
-    const query = `SELECT session_id FROM Joined WHERE user_id = ${user_id}`
+    const query = `SELECT session_id\ 
+                    FROM Joined\ 
+                    WHERE user_id = ${user_id}`
     connection.query(query, function(err,results,fields){
         res.send(results)
     })
@@ -60,13 +64,22 @@ app.get("/joinedsession", async(req,res) => {
 
 app.post('/joinsession', async(req,res) => {
     const {user_id, session_id, introductions} = req.body
-    const query = `INSERT INTO Joined(user_id, session_id, introductions) VALUES (${user_id}, ${session_id}, '${introductions}')`
+    const query = `INSERT INTO Joined(user_id, session_id, introductions)\ 
+                    VALUES (${user_id}, ${session_id}, '${introductions}')`
     connection.query(query, function(err, results, fields){});
     res.send({})
 })
 
-
-
+app.get('/getparticipants', async(req,res)=>{
+    const {session_id} = req.query;
+    const query = `SELECT firstname, lastname, introductions\ 
+                    FROM User\ 
+                    JOIN Joined on User.user_id = Joined.user_id\
+                    WHERE session_id = ${session_id};` 
+    connection.query(query, function(err,results,fields){
+        res.send(results)
+    })
+})
 
 app.post("/register", async (req,res)=>{
     const {email, password, firstname, lastname} = req.body
@@ -74,12 +87,12 @@ app.post("/register", async (req,res)=>{
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password,salt)
 
-        const query = `INSERT INTO User(firstname, lastname, email, password) VALUES ('${firstname}','${lastname}','${email}','${hashedPassword}')`
+        const query = `INSERT INTO User(firstname, lastname, email, password)\ 
+                        VALUES ('${firstname}','${lastname}','${email}','${hashedPassword}')`
         connection.query(query, function(err,results,fields){
             if(err){
                 console.log(err)
             } else {
-                console.log({...req.body, user_id: results.insertId})
                 res.status(200).send({...req.body, user_id: results.insertId})
             }
         })

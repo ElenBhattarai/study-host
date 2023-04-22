@@ -15,6 +15,7 @@ export default function CreateSession() {
   const [endTime, setEndTime] = useState('');
   const [studyGroupName, setStudyGroupName] = useState('');
   const [mode, setMode] = useState('');
+  const [description, setDescription] = useState('')
   const navigate = useNavigate();
 
   async function fetchCourses() {
@@ -58,7 +59,7 @@ export default function CreateSession() {
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: studyGroupName, mode: mode, dept:department, cnum: courseNumber, date: date, stime: startTime, etime: endTime, user_id: sessionStorage.getItem('user_id') })
+        body: JSON.stringify({ name: studyGroupName, mode: mode, dept:department, cnum: courseNumber, date: date, stime: startTime, etime: endTime, user_id: sessionStorage.getItem('user_id'), description: description })
       };
       try {
         await fetch('http://localhost:8000/createsession', requestOptions);
@@ -102,6 +103,9 @@ export default function CreateSession() {
         <h1>Create a new session</h1>
         <label htmlFor="studyGroupName">Study Group Name:</label>
         <input id="studyGroupName" type="text" value={studyGroupName} onChange={event => setStudyGroupName(event.target.value)} />
+        <br/>
+        <label htmlFor="description">Description: </label>
+        <input id="description" type="text" value={description} onChange={event => setDescription(event.target.value)} />
         <br/>
         <label htmlFor="mode">Mode:</label>
         <select id="mode" value={mode} onChange={event => setMode(event.target.value)}>

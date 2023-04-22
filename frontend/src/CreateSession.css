@@ -45,3 +45,8 @@ button:hover {
     background-color: #005f6b;
     text-decoration: none !important;
 }
+
+#description{
+    width: 75%;
+    height: 3rem;
+}

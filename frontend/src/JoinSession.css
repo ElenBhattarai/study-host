@@ -24,6 +24,7 @@
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
+    width: 100vw;
 }
 
 .card {
@@ -114,6 +115,22 @@
     flex-direction: column;
     gap: 10px;
     font-size: 1.8rem;
+}
+
+.popup-body2 {
+    display: flex;
+    font-size: 1.8rem;
+    flex-direction: column;
+    align-items:start;
+    font-size: 1.5rem;
+}
+
+.list-elements{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
 }
 
 label {
