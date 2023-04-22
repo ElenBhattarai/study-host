@@ -35,15 +35,35 @@ app.post('/createsession', async(req,res) => {
             console.log(err)
         }
     })
+    const query2 = `INSERT INTO Joined(user_id, session_id) VALUES (${user_id}, (SELECT MAX(session_id) FROM Session))`
+    connection.query(query2, function(err,results,fields){
+        if(err){
+            console.log(err)
+        }
+    })
     res.json({})
 })
 
 app.get('/allsessions', async(req,res) => {
     connection.query('SELECT * FROM Session', function (err, results, fields) {   
-        console.log('Query results:', results);
         res.json({ sessions: results });
         })
 })
+
+app.get("/joinedsession", async(req,res) => {
+    const {user_id} = req.query;
+    const query = `SELECT session_id FROM Joined WHERE user_id = ${user_id}`
+    connection.query(query, function(err,results,fields){
+        res.send(results)
+    })
+})
+
+
+
+
+
+
+
 
 app.post("/register", async (req,res)=>{
     const {email, password, firstname, lastname} = req.body
@@ -75,7 +95,7 @@ app.post("/login", async(req,res)=>{
                 console.log(err)
             } else {
                 if(!results[0]){
-                    res.status(400).send('Wrong password')
+                    res.status(400).send('Wrong email')
                 } else {
                     const validPassword = await bcrypt.compare(password, results[0].password)
                     if(!validPassword){
