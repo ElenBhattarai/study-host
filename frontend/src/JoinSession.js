@@ -11,7 +11,8 @@ export default function JoinSession() {
     const [intro,setIntro] = useState('')
     const [session, setSession] = useState({})
     const [showParticipants, setShowParticipants] = useState(false);
-    const [participants, setPartcipants] = useState([])
+    const [participants, setParticipants] = useState([])
+    const [creator, setCreator] = useState({})
 
     async function fetchSessions(){
         const response = await fetch('http://localhost:8000/allsessions')
@@ -42,9 +43,13 @@ export default function JoinSession() {
 
     const viewParticipants = async(session) => {
         setShowParticipants(true);
+        setSession(session)
         const res = await fetch(`http://localhost:8000/getparticipants?session_id=${session.session_id}`)
         const data = await res.json()
-        setPartcipants(data)
+        setParticipants(data)
+        const res1 = await fetch(`http://localhost:8000/user?user_id=${session.user_id}`)
+        const user = await res1.json()
+        setCreator(user[0])
     }
 
     const closeParticipants = () => {
@@ -135,11 +140,17 @@ export default function JoinSession() {
                                 <button className="close-button" onClick={closeParticipants}>X</button>
                             </div>
                             <div className="popup-body2">
+                                <div className='list-elements'>
+                                    <h2>Creator: {creator.firstname} {creator.lastname}</h2>
+                                    <h2>Description: {session.description}</h2>
+                                </div>
                                 {participants.map(participant =>(
                                     <div className='list-elements'>
-                                        <h3>{participant.firstname} {participant.lastname}</h3>
+                                        {participant.user_id == sessionStorage.getItem('user_id') ? "" : (
+                                        <>
+                                        <h2>{participant.firstname} {participant.lastname}</h2>
                                         <p>introduction: {participant.introductions}</p>
-
+                                        </>)}
                                     </div>
                                 ))}
                             </div>

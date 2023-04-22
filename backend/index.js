@@ -31,7 +31,8 @@ app.post('/createsession', async(req,res) => {
     const query =  `INSERT INTO Session(name,date,start_time,end_time,mode,course_id,user_id, description)\ 
                     VALUES ('${name}', '${date}', '${stime}', '${etime}', '${mode}',\ 
                     (SELECT course_id FROM Course WHERE department = '${dept}' AND course_num = ${cnum}), ${user_id}, '${description}')`
-    connection.query(query, function (err, results, fields){
+    console.log(query)
+                    connection.query(query, function (err, results, fields){
         if(err){
             console.log(err)
         }
@@ -72,14 +73,26 @@ app.post('/joinsession', async(req,res) => {
 
 app.get('/getparticipants', async(req,res)=>{
     const {session_id} = req.query;
-    const query = `SELECT firstname, lastname, introductions\ 
+    console.log(session_id)
+    const query = `SELECT firstname, lastname, introductions, User.user_id\ 
                     FROM User\ 
                     JOIN Joined on User.user_id = Joined.user_id\
                     WHERE session_id = ${session_id};` 
     connection.query(query, function(err,results,fields){
         res.send(results)
+        console.log(results)
     })
 })
+
+app.get('/user', async(req,res)=>{
+    const {user_id} = req.query;
+    const query = `SELECT * FROM User WHERE user_id = ${user_id}`
+    console.log(query)
+    connection.query(query, function(err,results,fields){
+        res.send(results)
+    })
+})
+
 
 app.post("/register", async (req,res)=>{
     const {email, password, firstname, lastname} = req.body
@@ -126,7 +139,6 @@ app.post("/login", async(req,res)=>{
         console.log(e)
     }
 })
-
 
 
 app.listen(8000, ()=> {
