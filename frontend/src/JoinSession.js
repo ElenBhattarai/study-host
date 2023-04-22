@@ -47,6 +47,7 @@ export default function JoinSession() {
         const res = await fetch(`http://localhost:8000/getparticipants?session_id=${session.session_id}`)
         const data = await res.json()
         setParticipants(data)
+        console.log(participants)
         const res1 = await fetch(`http://localhost:8000/user?user_id=${session.user_id}`)
         const user = await res1.json()
         setCreator(user[0])
@@ -100,18 +101,22 @@ export default function JoinSession() {
                 <div className="card-container">
                     {sessions.map(session => (
                         <div className="card" key={session.date}>
+                            <div class="card-body">
                             <h3>{session.name}</h3>
                             <p>Date: {moment.utc(session.date).format("MMM Do, YYYY")}</p>
                             <p>Start time: {session.start_time}</p>
                             <p>End time: {session.end_time}</p>
                             <p>Mode: {session.mode}</p>
-                            <p></p>
+                            <p>Description: {session.description}</p>
+                            </div>
+                            <div class="card-buttons">
                             <span>
                             <button className='participants' onClick={()=>viewParticipants(session)}>View participants</button>
                             {joined.includes(session.session_id)? <button className='joined'>Joined</button> :
                                 <button className='join' onClick={()=>joinSession(session)}>Join</button>
                             }
                             </span>
+                            </div>
                         </div>
                     ))}
                 </div>
@@ -140,16 +145,16 @@ export default function JoinSession() {
                                 <button className="close-button" onClick={closeParticipants}>X</button>
                             </div>
                             <div className="popup-body2">
-                                <div className='list-elements'>
+                                <div className='list-elementss'>
                                     <h2>Creator: {creator.firstname} {creator.lastname}</h2>
-                                    <h2>Description: {session.description}</h2>
+                                    <p>Description: {session.description}</p>
                                 </div>
                                 {participants.map(participant =>(
-                                    <div className='list-elements'>
-                                        {participant.user_id == sessionStorage.getItem('user_id') ? "" : (
+                                    <div className='list-elementss'>
+                                        {participant.user_id == creator.user_id ? "" : (
                                         <>
                                         <h2>{participant.firstname} {participant.lastname}</h2>
-                                        <p>introduction: {participant.introductions}</p>
+                                        <p>Introduction: {participant.introductions}</p>
                                         </>)}
                                     </div>
                                 ))}
