@@ -6,6 +6,8 @@ export default function JoinSession() {
     const [sessions, setSessions] = useState([]);
     const [joined, setJoined] = useState([]);
     const [showPopup, setShowPopup] = useState(false);
+    const [intro,setIntro] = useState('')
+    const [session, setSession] = useState('')
 
     async function fetchSessions(){
         const response = await fetch('http://localhost:8000/allsessions')
@@ -24,12 +26,30 @@ export default function JoinSession() {
         fetchSessions();
     },[])
 
-    const joinSession = () => {
+    const joinSession = (session_id) => {
         setShowPopup(true);
+        setSession(session_id)
     }
 
     const closePopup = () => {
         setShowPopup(false);
+        setSession('')
+    }
+
+    const handleJoin = async() => {
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ user_id : sessionStorage.getItem('user_id'), session_id : session, introductions: intro })
+          };
+          try {
+            const response = await fetch('http://localhost:8000/joinsession', requestOptions);
+          } catch(err) {
+            console.log(err)
+          }
+        setIntro('')
+        closePopup()
+        setJoined([...joined, session])
     }
 
     return (
@@ -48,7 +68,7 @@ export default function JoinSession() {
                             <span>
                             <button className='participants'>View participants</button>
                             {joined.includes(session.session_id)? <button className='joined'>Joined</button> :
-                                <button className='join' onClick={joinSession}>Join</button>
+                                <button className='join' onClick={()=>joinSession(session.session_id)}>Join</button>
                             }
                             </span>
                         </div>
@@ -62,9 +82,9 @@ export default function JoinSession() {
                                 <button className="close-button" onClick={closePopup}>X</button>
                             </div>
                             <div className="popup-body">
-                                <label htmlFor="intro">Introduce yourself:</label>
-                                <input type="text" id="intro" />
-                                <button className="submit-button">Join</button>
+                                <label htmlFor="intro">Introduce yourself to all participants:</label>
+                                <input type="text" id="intro" onChange={(event)=>setIntro(event.target.value)}/>
+                                <button className="submit-button" onClick = {handleJoin} >Join</button>
                             </div>
                         </div>
                     </div>

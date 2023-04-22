@@ -58,9 +58,12 @@ app.get("/joinedsession", async(req,res) => {
     })
 })
 
-
-
-
+app.post('/joinsession', async(req,res) => {
+    const {user_id, session_id, introductions} = req.body
+    const query = `INSERT INTO Joined(user_id, session_id, introductions) VALUES (${user_id}, ${session_id}, '${introductions}')`
+    connection.query(query, function(err, results, fields){});
+    res.send({})
+})
 
 
 
