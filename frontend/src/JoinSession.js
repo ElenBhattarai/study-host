@@ -38,6 +38,10 @@ export default function JoinSession(props) {
             arr2.push(data.sessions[0])
         }
         setMy(arr2)
+        const now = await fetch('http://localhost:8000/happeningnow')
+        const nowData = await now.json()
+        console.log(nowData)
+
     }
 
     useEffect (()=> {

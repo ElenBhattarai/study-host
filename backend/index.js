@@ -10,6 +10,10 @@ app.use(cors());
 app.use(bodyParser.json());
 const bcrypt = require("bcrypt");
 const e = require('express');
+
+connection.query("SET time_zone = 'US/Central'", (err, result) => {
+    console.log('Time zone set to US Central Time');
+});
  
 app.get('/getdepts', async(req,res) => {
     connection.query('SELECT * FROM Course', function (err, results, fields) {   
@@ -23,6 +27,15 @@ app.get('/getcourses', async(req,res) => {
                         WHERE department = '${req.query.dept}'`, function (err, results, fields) { 
         res.json({ courses: results });
     })
+})
+
+app.get('/happeningnow', async(req,res)=> {
+    connection.query(`SELECT * FROM Session\
+                        WHERE date = CURDATE()\
+                        AND start_time <= NOW()\
+                        AND end_time >= NOW();`, function(err, results, fields) {
+        res.json({results})
+    })  
 })
 
 app.get('/getsession', async(req,res)=> {
