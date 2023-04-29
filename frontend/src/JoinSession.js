@@ -17,6 +17,7 @@ export default function JoinSession(props) {
     const [selected, setSelected] = useState('all');
     const [all, setAll] = useState([])
     const [my, setMy] = useState([])
+    const [now, setNow] = useState([])
 
     async function fetchSessions(){
         const response = await fetch('http://localhost:8000/allsessions')
@@ -41,7 +42,7 @@ export default function JoinSession(props) {
         const now = await fetch('http://localhost:8000/happeningnow')
         const nowData = await now.json()
         console.log(nowData)
-
+        setNow(nowData.results)
     }
 
     useEffect (()=> {
@@ -108,7 +109,9 @@ export default function JoinSession(props) {
         else if(s == "all"){
             setSessions(all)
         }
-
+        else if(s == "now"){
+            setSessions(now)
+        }
     }
 
     return (
