@@ -22,8 +22,8 @@ export default function JoinSession(props) {
     async function fetchSessions(){
         const response = await fetch('http://localhost:8000/allsessions')
         const data = await response.json()
+        console.log(data)
         setAll(data.sessions)
-        console.log(data.sessions)
         setSessions(data.sessions)
         const res = await fetch(`http://localhost:8000/joinedsession?user_id=${sessionStorage.getItem('user_id')}`)
         const data2 = await res.json()
@@ -42,6 +42,7 @@ export default function JoinSession(props) {
         const now = await fetch('http://localhost:8000/happeningnow')
         const nowData = await now.json()
         console.log(nowData)
+        setNow([])
         setNow(nowData.results)
     }
 
@@ -139,7 +140,7 @@ export default function JoinSession(props) {
                 
                 <div className="card-container">
                     {sessions.map(session => (
-                        <div className="card" key={session.date}>
+                        <div className="card">
                             <div class="card-body">
                             <h3>{session.name}</h3>
                             <p>Date: {moment.utc(session.date).format("MMM Do, YYYY")}</p>
