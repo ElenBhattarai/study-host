@@ -3,8 +3,9 @@ import moment from 'moment'
 import './JoinSession.css'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Link } from 'react-router-dom';
 
-export default function JoinSession() {
+export default function JoinSession(props) {
     const [sessions, setSessions] = useState([]);
     const [joined, setJoined] = useState([]);
     const [showPopup, setShowPopup] = useState(false);
@@ -13,10 +14,15 @@ export default function JoinSession() {
     const [showParticipants, setShowParticipants] = useState(false);
     const [participants, setParticipants] = useState([])
     const [creator, setCreator] = useState({})
+    const [selected, setSelected] = useState('all');
+    const [all, setAll] = useState([])
+    const [my, setMy] = useState([])
 
     async function fetchSessions(){
         const response = await fetch('http://localhost:8000/allsessions')
         const data = await response.json()
+        setAll(data.sessions)
+        console.log(data.sessions)
         setSessions(data.sessions)
         const res = await fetch(`http://localhost:8000/joinedsession?user_id=${sessionStorage.getItem('user_id')}`)
         const data2 = await res.json()
@@ -25,6 +31,13 @@ export default function JoinSession() {
             arr.push(data2[i].session_id)
         }
         setJoined(arr)
+        let arr2 = []
+        for(let i of arr){
+            const res = await fetch(`http://localhost:8000/getsession?sess=${i}`)
+            const data = await res.json()
+            arr2.push(data.sessions[0])
+        }
+        setMy(arr2)
     }
 
     useEffect (()=> {
@@ -83,6 +96,17 @@ export default function JoinSession() {
             });
     }
 
+    const handleButtonClick =(s)=>{
+        setSelected(s);
+        if(s == "my"){
+            setSessions(my)
+        }
+        else if(s == "all"){
+            setSessions(all)
+        }
+
+    }
+
     return (
         <div className="App">
             <ToastContainer position="top-right"
@@ -98,6 +122,14 @@ export default function JoinSession() {
             />
             <div className="App-header">
                 <h1>Join a study session</h1>
+                <nav className="nav">
+                    <div className='nav-headers'>
+                    <Link className={`nav-buttons ${selected === 'all' ? 'selected' : ''}`} to="#" onClick={() => handleButtonClick('all')}>All</Link>
+                    <Link className={`nav-buttons ${selected === 'now' ? 'selected' : ''}`} to="#" onClick={() => handleButtonClick('now')}>Happening now</Link>
+                    <Link className={`nav-buttons ${selected === 'my' ? 'selected' : ''}`} to="#" onClick={() => handleButtonClick('my')}>My study sessions</Link>            
+                    </div>                
+                </nav>
+                
                 <div className="card-container">
                     {sessions.map(session => (
                         <div className="card" key={session.date}>
@@ -165,6 +197,5 @@ export default function JoinSession() {
 
             </div>
         </div>
-        
     )
 }

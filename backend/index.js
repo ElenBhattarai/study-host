@@ -25,6 +25,14 @@ app.get('/getcourses', async(req,res) => {
     })
 })
 
+app.get('/getsession', async(req,res)=> {
+    connection.query(`SELECT *\
+                        FROM Session\
+                        WHERE session_id = ${req.query.sess}`, function(err, results, fields) {
+        res.json({sessions: results});                
+    })
+})
+
 app.post('/createsession', async(req,res) => {
     const {name, mode, dept, cnum, date, stime, etime, user_id, description} = req.body
 
