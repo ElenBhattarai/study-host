@@ -108,7 +108,6 @@ app.get('/getparticipants', async(req,res)=>{
 app.get('/user', async(req,res)=>{
     const {user_id} = req.query;
     const query = `SELECT * FROM User WHERE user_id = ${user_id}`
-    console.log(query)
     connection.query(query, function(err,results,fields){
         res.send(results)
     })

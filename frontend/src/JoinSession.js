@@ -22,7 +22,6 @@ export default function JoinSession(props) {
     async function fetchSessions(){
         const response = await fetch('http://localhost:8000/allsessions')
         const data = await response.json()
-        console.log(data)
         setAll(data.sessions)
         setSessions(data.sessions)
         const res = await fetch(`http://localhost:8000/joinedsession?user_id=${sessionStorage.getItem('user_id')}`)
@@ -41,7 +40,6 @@ export default function JoinSession(props) {
         setMy(arr2)
         const now = await fetch('http://localhost:8000/happeningnow')
         const nowData = await now.json()
-        console.log(nowData)
         setNow([])
         setNow(nowData.results)
     }
@@ -61,7 +59,6 @@ export default function JoinSession(props) {
     }
 
     const viewParticipants = async(session) => {
-        setShowParticipants(true);
         setSession(session)
         const res = await fetch(`http://localhost:8000/getparticipants?session_id=${session.session_id}`)
         const data = await res.json()
@@ -70,6 +67,7 @@ export default function JoinSession(props) {
         const res1 = await fetch(`http://localhost:8000/user?user_id=${session.user_id}`)
         const user = await res1.json()
         setCreator(user[0])
+        setShowParticipants(true);
     }
 
     const closeParticipants = () => {
