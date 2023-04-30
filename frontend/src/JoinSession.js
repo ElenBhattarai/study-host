@@ -98,6 +98,7 @@ export default function JoinSession(props) {
             progress: undefined,
             theme: "light",
             });
+        fetchSessions()
     }
 
     const handleButtonClick =(s)=>{
