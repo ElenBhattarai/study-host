@@ -20,11 +20,11 @@ export default function JoinSession(props) {
     const [now, setNow] = useState([])
 
     async function fetchSessions(){
-        const response = await fetch('http://localhost:8000/allsessions')
+        const response = await fetch('http://studyhostbackend.duckdns.org/allsessions')
         const data = await response.json()
         setAll(data.sessions)
         setSessions(data.sessions)
-        const res = await fetch(`http://localhost:8000/joinedsession?user_id=${sessionStorage.getItem('user_id')}`)
+        const res = await fetch(`http://studyhostbackend.duckdns.org/joinedsession?user_id=${sessionStorage.getItem('user_id')}`)
         const data2 = await res.json()
         let arr = []
         for(let i in data2){
@@ -33,12 +33,12 @@ export default function JoinSession(props) {
         setJoined(arr)
         let arr2 = []
         for(let i of arr){
-            const res = await fetch(`http://localhost:8000/getsession?sess=${i}`)
+            const res = await fetch(`http://studyhostbackend.duckdns.org/getsession?sess=${i}`)
             const data = await res.json()
             arr2.push(data.sessions[0])
         }
         setMy(arr2)
-        const now = await fetch('http://localhost:8000/happeningnow')
+        const now = await fetch('http://studyhostbackend.duckdns.org/happeningnow')
         const nowData = await now.json()
         setNow([])
         setNow(nowData.results)
@@ -60,11 +60,11 @@ export default function JoinSession(props) {
 
     const viewParticipants = async(session) => {
         setSession(session)
-        const res = await fetch(`http://localhost:8000/getparticipants?session_id=${session.session_id}`)
+        const res = await fetch(`http://studyhostbackend.duckdns.org/getparticipants?session_id=${session.session_id}`)
         const data = await res.json()
         setParticipants(data)
         console.log(participants)
-        const res1 = await fetch(`http://localhost:8000/user?user_id=${session.user_id}`)
+        const res1 = await fetch(`http://studyhostbackend.duckdns.org/user?user_id=${session.user_id}`)
         const user = await res1.json()
         setCreator(user[0])
         setShowParticipants(true);
@@ -81,7 +81,7 @@ export default function JoinSession(props) {
             body: JSON.stringify({ user_id : sessionStorage.getItem('user_id'), session_id : session.session_id, introductions: intro })
           };
           try {
-            const response = await fetch('http://localhost:8000/joinsession', requestOptions);
+            const response = await fetch('http://studyhostbackend.duckdns.org/joinsession', requestOptions);
           } catch(err) {
             console.log(err)
           }

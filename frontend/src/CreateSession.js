@@ -19,7 +19,7 @@ export default function CreateSession() {
   const navigate = useNavigate();
 
   async function fetchCourses() {
-    const response = await fetch('http://localhost:8000/getdepts');
+    const response = await fetch('http://studyhostbackend.duckdns.org/getdepts');
     const data = await response.json();
     const uniqueDepartments = [...new Set(data.courses.map(course => course.department))];
     setDepartments(uniqueDepartments);
@@ -33,7 +33,7 @@ export default function CreateSession() {
     const selectedDepartment = event.target.value;
     setDepartment(selectedDepartment);
     console.log(department)
-    const response = await fetch(`http://localhost:8000/getcourses?dept=${selectedDepartment}`);
+    const response = await fetch(`http://studyhostbackend.duckdns.org/getcourses?dept=${selectedDepartment}`);
     const data = await response.json();
     setCourseNumbers(data.courses)
   }
@@ -62,7 +62,7 @@ export default function CreateSession() {
         body: JSON.stringify({ name: studyGroupName, mode: mode, dept:department, cnum: courseNumber, date: date, stime: startTime, etime: endTime, user_id: sessionStorage.getItem('user_id'), description: description })
       };
       try {
-        await fetch('http://localhost:8000/createsession', requestOptions);
+        await fetch('http://studyhostbackend.duckdns.org/createsession', requestOptions);
         toast.success('New study session sucessfully created!', {
           position: "top-right",
           autoClose: 5000,
