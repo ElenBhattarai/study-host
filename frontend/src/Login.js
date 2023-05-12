@@ -25,7 +25,7 @@ function Login() {
       body: JSON.stringify({ email: email, password: password})
     };
     try {
-      const response = await fetch('http://studyhostbackend.duckdns.org/login', requestOptions);
+      const response = await fetch('https://studyhostbackend.duckdns.org/login', requestOptions);
       if(response.status === 400)
       {
         toast.error('Wrong email or password!', {

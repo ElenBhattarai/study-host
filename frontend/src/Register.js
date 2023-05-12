@@ -17,7 +17,7 @@ function Register() {
       body: JSON.stringify({ firstname: firstName, lastname: lastName, email: email, password: password})
     };
     try {
-      const response = await fetch('http://studyhostbackend.duckdns.org/register', requestOptions);
+      const response = await fetch('https://studyhostbackend.duckdns.org/register', requestOptions);
       const data = await response.json()
       console.log(data)
       sessionStorage.setItem('loggedIn', true)
